@@ -9,7 +9,7 @@ class Deck {
 		~Deck();
 		void shuffle();
 		Card deal();
-		bool isEmpty();
+		bool isEmpty() const;
 	private: 
 		std::vector<Card*> cards_;
 		int index_;

@@ -12,23 +12,13 @@ class Player {
 public:
 	Player(StraightStrategy*);
 	void setStrategy(StraightStrategy*);
-	void addCard(Card&);
-	void discard(Card&);
-	const vector<Card>& getHand();
-
-//exception class
+	void addCard(const Card&);
+	void remove(const Card&);
+	void discard(const Card&);
+	void makeMove();
+	const vector<Card>& getHand() const;
 private:
-	class InvalidCommandException {
-	public:
-		Command command();
-	private:
-		Command command_;
-	};
-
-private:
-	void remove(Card&);
-private:
-	StraightStrategy *strategy;
+	StraightStrategy *strategy_;
 	std::vector<Card> discard_;
 	std::vector<Card> hand_;
 };

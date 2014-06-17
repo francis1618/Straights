@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool Deck::isEmpty() {
+bool Deck::isEmpty() const {
 	return !(index_ < CARD_COUNT);
 }
 

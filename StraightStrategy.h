@@ -7,14 +7,9 @@ class Player;
 
 class StraightStrategy {
 public:
-	void setPlayer(Player&);
-	virtual void executeStrategy() = 0;
-	virtual ~playMove();
-private:
-	class UnsetPlayerException {
-	};
-private:
-	Player *player_;
+	virtual void executeStrategy(Player&, const vector<Card>&) = 0;
+	const vector<Card>& validStraightPlays(Player&, const vector<Card>&);
+	~StraightStrategy();
 };
 
 #endif

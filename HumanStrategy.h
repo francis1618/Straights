@@ -2,11 +2,18 @@
 #define StraightStrategy_H
 
 #include "StraightStrategy.h"
+#include "Player.h"
 #include "Command.h"
 
 class HumanStragety : public StraightStrategy {
 public:
-	void executeStrategy();
+	HumanStragety(Command &command);
+	void executeStrategy(Player&, const vector<Card>&);
+public:
+	class InvalidHumanStrategyException() {		
+	};
+private:
+	Command &command_;
 };
 
 #endif

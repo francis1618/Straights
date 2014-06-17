@@ -5,7 +5,7 @@
 
 class ComputerStrategy : public StraightStrategy {
 public:
-	void executeStrategy() ;
+	void executeStrategy(Player& const vector<Card>&);
 };
 
 #endif

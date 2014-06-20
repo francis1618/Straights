@@ -1,6 +1,6 @@
 CXX = g++ 						# variables and initialization
 CXXFLAGS = -g -Wall -MMD 		# builds dependency lists in .d ﬁles
-OBJECTS = Command.o Card.o Deck.o Player.o StraightStrategy.o HumanStrategy.o ComputerStrategy.o Game.o
+OBJECTS = Command.o Card.o Deck.o Player.o StraightStrategy.o HumanStrategy.o ComputerStrategy.o Game.o main.o
 DEPENDS = ${OBJECTS:.o=.d} 		# substitute ".o" with ".d"
 EXEC = exec
 

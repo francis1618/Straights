@@ -1,3 +1,6 @@
+#ifndef DECK_H
+#define DECK_H
+
 #include "Card.h"
 #include <vector>
 
@@ -17,3 +20,5 @@ class Deck {
 };
 
 std::ostream &operator<<(std::ostream &, const Deck &);
+
+#endif

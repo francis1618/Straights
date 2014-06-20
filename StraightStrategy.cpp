@@ -1,50 +1,54 @@
+#include <vector>
+#include <algorithm>
 #include "StraightStrategy.h"
 #include "Player.h"
 #include "Card.h"
 using namespace std;
 
 
-void add(vector<Card>&, const Card&);
+void addIfValid(vector<Card>&, const vector<Card>&, const Card&);
 
-vector<Card> StraightStrategy::validStraightPlays(const Player& player, const vector<Card>& table) const {
+vector<Card> StraightStrategy::validStraightPlays(const Player& player, const vector<Card>& table) {
 
-	const vector<Card>& hand = player.getHand();
 	vector<Card> valid;
+	const vector<Card>& hand = player.getHand();
 
-	for(int i=0; i<table.size(); i++) {
+	for(unsigned i=0; i<table.size(); i++) {
 		// get suit rank
 		int suit = table[i].getSuit();
 		int rank = table[i].getRank();
 		
 		//check all same rank, different suit
-		for(int s = CLUB, s<SUIT_COUNT; s++) {
-			//different suit
+		for(int s = CLUB; s<SUIT_COUNT; s++) {
+			//check different suit
 			if(s!=suit) {
-				Card card(suit, rank);
+				Card card((Suit)s, (Rank)rank);
 				addIfValid(valid,hand,card);
 			}	
 		}
 
+		//check one card below with same suit
 		if(ACE <= rank-1) {
-			Card card(suit, rank-1);
+			Card card((Suit)suit, (Rank)(rank-1));
 			addIfValid(valid,hand,card);
 		}
 
+		//check one card above with same suit
 		if(rank+1 <= KING) {
-			Card card(suit, rank+1);
+			Card card((Suit)suit, (Rank)(rank+1));
 			addIfValid(valid,hand,card);
 		}
 	}
-
 	return valid;
 }
 
 
-void addIfValid(vector<Card>& valid, vector<Card>& hand, const Card& card) {
-	//check if it's  in player's hand
+void addIfValid(vector<Card>& valid, const vector<Card>& hand, const Card& card) {
+	//if it's not in your hand
 	if(find(hand.begin(), hand.end(), card) != hand.end()) {
-		//add if it's already in valid
-		if(find(valid.begin(), valid.end(), valid) == valid.end) {
+		//and its not an option you knew about before
+		if(find(valid.begin(), valid.end(), card) == valid.end()) {
+			//add the option
 			valid.push_back(card);
 		}
 	}

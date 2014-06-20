@@ -1,19 +1,23 @@
-#ifndef StraightStrategy_H
-#define StraightStrategy_H
+#ifndef HUMANSTRATEGY_H
+#define HUMANSTRATEGY_H
 
-#include "StraightStrategy.h"
-#include "Player.h"
 #include "Command.h"
+#include "StraightStrategy.h"
+#include <vector>
 
-class HumanStragety : public StraightStrategy {
+class StraightStrategy;
+class Player;
+class HumanStrategy : public StraightStrategy {
 public:
-	HumanStragety(Command &command);
-	void executeStrategy(Player&, const vector<Card>&);
+	void executeStrategy(Player&, std::vector<Card>&);
 public:
-	class InvalidHumanStrategyException() {		
+	class InvalidHumanStrategyException {
+	public:
+		 InvalidHumanStrategyException(Command);
+		Command getCommand() const;
+	private:
+		Command command_;	
 	};
-private:
-	Command &command_;
 };
 
 #endif

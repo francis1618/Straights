@@ -1,6 +1,9 @@
-#include "Deck.h"
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include "Deck.h"
+using namespace std;
+
 
 using namespace std;
 
@@ -40,13 +43,11 @@ void Deck::shuffle() {
 }
 
 Card Deck::deal() {
-	if (!isEmpty()) {
+	//if (!isEmpty()) {
 		return *cards_[index_++];
-	}
-	// *** IMPLEMENT LATER *** //
-	// else {
-	// 	throw DealingFromEmptyDeckException();
-	// } 
+	//} else {
+		//asdfdas
+	//}
 }
 
 ostream &operator<<(ostream &out, const Deck &deck) {

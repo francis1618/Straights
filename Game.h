@@ -24,7 +24,7 @@ private:
 private:
 	static const int kNumbeOfPlayers = 4;
 	Player* player_[kNumbeOfPlayers];
-	std::vector<Card> table;
+	std::vector<Card> table_;
 	Deck& deck_;
 
 	int firstPlayer_;

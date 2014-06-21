@@ -16,8 +16,7 @@ Deck& Deck::getInstance() {
 	return deck;
 }
 
-Deck::Deck() : index_(0)
-{
+Deck::Deck() : index_(0) {
 	for (int suit = CLUB; suit < SUIT_COUNT; suit++) {
 		for (int rank = ACE; rank < RANK_COUNT; rank++) {
 			Card* card = new Card((Suit)suit, (Rank)rank);
@@ -25,6 +24,7 @@ Deck::Deck() : index_(0)
 		}
 	}
 }
+
 
 Deck::~Deck() {
 	while(!cards_.empty()) {
@@ -48,11 +48,8 @@ void Deck::shuffle() {
 }
 
 Card Deck::deal() {
-	//if (!isEmpty()) {
-		return *cards_[index_++];
-	//} else {
-		//asdfdas
-	//}
+	//should throw exception in production code if there is no more cards
+	return *cards_[index_++];
 }
 
 ostream &operator<<(ostream &out, const Deck &deck) {

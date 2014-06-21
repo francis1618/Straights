@@ -90,7 +90,7 @@ void Game::playRound() {
 			
 			//try to play according to player strategy
 			try {
-				player_[currentPlayer]->makeMove(table);
+				player_[currentPlayer]->makeMove(table_);
 
 			//if player is Human and makes a something other than a play, discard, or view deck, catch the command exception and deal with it
 			} catch(HumanStrategy::InvalidHumanStrategyException err) {
@@ -104,7 +104,7 @@ void Game::playRound() {
 					cout<<"Player "<<currentPlayer+1<<" ragequits. A computer will now take over."<<endl;
 					StraightStrategy* strategy = new ComputerStrategy;
 					player_[currentPlayer]->setStrategy(strategy);
-					player_[currentPlayer]->makeMove(table); 
+					player_[currentPlayer]->makeMove(table_); 
 				}
 			}
 		}
@@ -128,6 +128,7 @@ void Game::endRound() {
 			<<player_[p]->getScore()<<" + "<<roundScore<<" = "<<newScore<<endl;
 		player_[p]->setScore(newScore);
 	}
+	table_.clear();
 }
 
 Game::~Game() {

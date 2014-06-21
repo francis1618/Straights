@@ -15,7 +15,7 @@ namespace {
 		static string array[13] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 		return array[r];
 	}
-	
+
 	//print cards on table of a particular suit
 	void printCardsOfSuit(const vector<Card>& table, Card::Suit suit) {
 		if(suit == Card::CLUB) cout<<"Clubs: ";
@@ -85,7 +85,7 @@ void HumanStrategy::executeStrategy(Player& player, vector<Card>& table) {
 		cin>>command;
 		//if user wants to see deck, print ti
 		if(command.type == Command::DECK) {
-			cout<<Deck::getInstance();
+			cout<<Deck::getInstance()<<endl;
 
 		//if user wants to play cards, check if its valid, is so, play it
 		} else if(command.type == Command::PLAY) {

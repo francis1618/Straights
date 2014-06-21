@@ -4,8 +4,8 @@
 #include "StraightStrategy.h"
 #include <vector>
 
-class StraightStrategy;
 
+// implement artificial intelligence behaviour strategy
 class ComputerStrategy : public StraightStrategy {
 public:
 	void executeStrategy(Player&, std::vector<Card>&);

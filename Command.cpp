@@ -3,27 +3,30 @@
 #include <sstream>
 using namespace std;
 
+
+// interpret user command, assert if valid command
+// keep record of valid command type
 istream &operator>>(istream &in, Command &c){
-	c.type = BAD_COMMAND;
+	c.type = Command::BAD_COMMAND;
 	
 	string cmd;
 	in >> cmd;
 	
 	if (cmd == "play") {
-		c.type = PLAY;
+		c.type = Command::PLAY;
 		in >> c.card;
 	} else if (cmd == "discard") {
-		c.type = DISCARD;
+		c.type = Command::DISCARD;
 		in >> c.card;
 	} else if (cmd == "deck") {
-		c.type = DECK;
+		c.type = Command::DECK;
 	} else if (cmd == "quit") {
-		c.type = QUIT;
+		c.type = Command::QUIT;
 	} else if (cmd == "ragequit") {
-		c.type = RAGEQUIT;
+		c.type = Command::RAGEQUIT;
 	}
 	
-	assert(!in.fail() && c.type != BAD_COMMAND);
+	assert(!in.fail() && c.type != Command::BAD_COMMAND);
 	
 	return in;
 }

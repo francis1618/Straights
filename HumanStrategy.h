@@ -5,12 +5,12 @@
 #include "StraightStrategy.h"
 #include <vector>
 
-class StraightStrategy;
-class Player;
+//strategy that relies on user input, if command is
+//not in score of human plays, transfer control back
+//to game via exception
 class HumanStrategy : public StraightStrategy {
 public:
-	void executeStrategy(Player&, std::vector<Card>&);
-public:
+	//exception class, embedded command that caused the issue
 	class InvalidHumanStrategyException {
 	public:
 		 InvalidHumanStrategyException(Command);
@@ -18,6 +18,9 @@ public:
 	private:
 		Command command_;	
 	};
+
+public:
+	void executeStrategy(Player&, std::vector<Card>&);
 };
 
 #endif

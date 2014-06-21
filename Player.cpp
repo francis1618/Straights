@@ -52,6 +52,16 @@ bool Player::remove(const Card &card) {
 	}
 }
 
+void Player::makeMove(vector<Card>& table) {
+	strategy_->executeStrategy(*this, table);
+}
+
+int Player::getScore() const {
+	int sum = 0;
+	for(int i=0; discard_.size(); i++)
+		sum += ((int)discard_[i].getRank()+1);
+	return sum;
+}
 const vector<Card>& Player::getHand() const {
 	return hand_;
 }

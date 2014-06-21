@@ -4,21 +4,28 @@
 #include "Player.h"
 #include "Deck.h"
 #include "Card.h"
+#include <vector>
+
 
 class Game {
 public:
 	Game();
 	~Game();
+	
+	void initGame();
+	void playGame();
+
+private:
 	void initRound();
-	//void playRound();
-	//void endGame();
-	//void finished();
+	void playRound();
+	bool gameOver();
 	
 private:
 	static const int kNumbeOfPlayers = 4;
 	Player* player_[kNumbeOfPlayers];
-	Deck deck_;
+	std::vector<Card> table;
+	Deck& deck_;
 
-	int firstPlayer;
+	int firstPlayer_;
 };
 #endif

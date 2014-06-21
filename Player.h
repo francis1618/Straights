@@ -15,10 +15,11 @@ public:
 	bool playCard(const Card&);	//return false if card is not in hand
 	bool discard(const Card&); //return false if card is not in hand
 	//accessors
+	int getScore() const;
 	const std::vector<Card>& getHand() const;
 	const std::vector<Card>& getDiscard() const;	
 	//make a move according to strategy
-	void makeMove();
+	void makeMove(std::vector<Card>&);
 
 private:
 	//inner helper function

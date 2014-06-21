@@ -1,12 +1,13 @@
-#include <algorithm>
-#include <iostream>
 #include "HumanStrategy.h"
 #include "Player.h"
 #include "Command.h"
 #include "Card.h"
+#include "Deck.h"
+#include <algorithm>
+#include <iostream>
 using namespace std;
 
-void printTable(const vector<Card>&, Suit);
+void printCardsOfSuit(const vector<Card>&, Suit);
 
 //excpetion class
 HumanStrategy::InvalidHumanStrategyException::InvalidHumanStrategyException(Command command) 
@@ -20,13 +21,11 @@ void HumanStrategy::executeStrategy(Player& player, vector<Card>& table) {
 	//find possible plays
 	vector<Card>choices = validStraightPlays(player, table);
 
-	//sort table
+	//sort and print table
 	sort(table.begin(), table.end());
-
-	//print table
 	cout<<"Cards on the table:"<<endl;
 	for(unsigned s=0; s<SUIT_COUNT; s++)
-		printTable(table, (Suit)s);
+		printCardsOfSuit(table, (Suit)s);
 
 	//print hand
 	cout<<"Your hand:";
@@ -43,7 +42,9 @@ void HumanStrategy::executeStrategy(Player& player, vector<Card>& table) {
 	Command command;
 	while(true) {
 		cin>>command;
-		if(command.type == PLAY && (find(choices.begin(), choices.end(), command.card)!=choices.end())) {
+		if(command.type == DECK) {
+			cout<<Deck::getInstance()<<endl;
+		} else if(command.type == PLAY && (find(choices.begin(), choices.end(), command.card)!=choices.end())) {
 			if( player.playCard(command.card)) 
 				break;
 		} else if(command.type == DISCARD) {
@@ -56,7 +57,7 @@ void HumanStrategy::executeStrategy(Player& player, vector<Card>& table) {
 
 }
 
-void printTable(const vector<Card>& table, Suit suit) {
+void printCardsOfSuit(const vector<Card>& table, Suit suit) {
 	if(suit == CLUB) cout<<"Clubs:";
 	else if(suit == DIAMOND) cout<<"Diamonds:";
 	else if(suit == HEART) cout<<"Hearts:";

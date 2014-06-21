@@ -1,1 +1,1 @@
-cs247 Project
+CS247 Project

@@ -13,38 +13,53 @@ vector<Card> StraightStrategy::validStraightPlays(const Player& player, const ve
 	vector<Card> valid;
 	const vector<Card>& hand = player.getHand();
 
-	for(unsigned i=0; i<table.size(); i++) {
-		// get suit rank
-		int suit = table[i].getSuit();
-		int rank = table[i].getRank();
-		
-		//check all same rank, different suit
+
+
+	//check 7 of spades, if so, return 7 of spades
+	Card sevenSpade(SPADE, SEVEN);
+	if(find(hand.begin(), hand.end(), sevenSpade) != hand.end()) {
+	
+		valid.push_back(sevenSpade);
+
+	} else {
+
+		//check all suit for SEVEN
 		for(int s = CLUB; s<SUIT_COUNT; s++) {
-			//check different suit
-			if(s!=suit) {
-				Card card((Suit)s, (Rank)rank);
+			Card card((Suit)s, SEVEN);
+			addIfValid(valid,hand,card);
+		}	
+
+		//check all different rank, same suit
+		for(unsigned i=0; i<table.size(); i++) {
+			// get suit rank
+			int suit = table[i].getSuit();
+			int rank = table[i].getRank();
+			
+
+			//check one card below with same suit
+			if(ACE <= rank-1) {
+				Card card((Suit)suit, (Rank)(rank-1));
 				addIfValid(valid,hand,card);
-			}	
-		}
+			}
+			//check one card above with same suit
+			if(rank+1 <= KING) {
+				Card card((Suit)suit, (Rank)(rank+1));
+				addIfValid(valid,hand,card);
+			}
 
-		//check one card below with same suit
-		if(ACE <= rank-1) {
-			Card card((Suit)suit, (Rank)(rank-1));
-			addIfValid(valid,hand,card);
-		}
 
-		//check one card above with same suit
-		if(rank+1 <= KING) {
-			Card card((Suit)suit, (Rank)(rank+1));
-			addIfValid(valid,hand,card);
 		}
 	}
 	return valid;
 }
 
+// since there is a virtual function, there should be a virtual destructor
+StraightStrategy::~StraightStrategy() {
+	// just for children to inherit
+}
 
 void addIfValid(vector<Card>& valid, const vector<Card>& hand, const Card& card) {
-	//if it's not in your hand
+	//if it's in your hand
 	if(find(hand.begin(), hand.end(), card) != hand.end()) {
 		//and its not an option you knew about before
 		if(find(valid.begin(), valid.end(), card) == valid.end()) {

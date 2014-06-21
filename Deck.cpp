@@ -11,6 +11,11 @@ bool Deck::isEmpty() const {
 	return !(index_ < CARD_COUNT);
 }
 
+Deck& Deck::getInstance() {
+	static Deck deck;
+	return deck;
+}
+
 Deck::Deck() : index_(0)
 {
 	for (int suit = CLUB; suit < SUIT_COUNT; suit++) {

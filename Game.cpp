@@ -11,6 +11,8 @@ using namespace std;
 
 Game::Game() 
 	:deck_(Deck::getInstance()) {
+	for(int i=0; i<kNumbeOfPlayers; i++)
+		player_[i] = NULL;
 	initGame();
 
 }
@@ -23,6 +25,7 @@ void Game::initGame() {
 		cout<<"Is player "<<i<<" a human(h) or a computer(c)?"<<endl;
 		cin>>type;		
 
+
 		//I think we should use exception here, but since sample program used assert
 		assert(type == 'h' || type == 'H' || type == 'c' || type == 'C');
 
@@ -31,9 +34,12 @@ void Game::initGame() {
 		} else if (type == 'c' || type == 'C') {
 			strategy = new ComputerStrategy;
 		}
-		if(player_[i])
-			delete player_[i];
-		player_[i] = new Player(strategy, i);
+
+		if(NULL == player_[i]) {
+			player_[i] = new Player(strategy, i+1);	
+		} else {
+			player_[i]->setStrategy(strategy);
+		}
 	}
 }
 
@@ -54,10 +60,15 @@ void Game::initRound() {
 void Game::playGame() {
 	//try catch just for internal flow control, no need to make new exception class
 	try {
-		while(!gameOver()) {
-		initRound();
-		playRound();
-		}
+		//while(!gameOver()) {
+			initRound();
+			playRound();
+		//}
+			for(int p=0; p<kNumbeOfPlayers; p++) {
+				cout<<"Player "<<p+1<<"\'s discards: ";
+				for(int c=0; c<player_[i].getDiscard().size() c++)
+					cout<<c==0?" ":" + "<<
+			}
 	} catch (int) {
 	}
 }
@@ -70,11 +81,11 @@ bool Game::gameOver() {
 	return false;
 }
 void Game::playRound() {
-	int numOfCard = player_[0]->getHand().size();
-	for(int i=0; i<numOfCard; i++){
+	int numOfCardsPerPlayer = player_[0]->getHand().size();
+	for(int i=0; i<numOfCardsPerPlayer; i++){
 		for(int p = 0; p<kNumbeOfPlayers; p++) {
 			//calculate who's turn it is
-			int currentPlayer = (i+firstPlayer_)%kNumbeOfPlayers;
+			int currentPlayer = (p+firstPlayer_)%kNumbeOfPlayers;
 			
 			//try to play according to player strategy
 			try {

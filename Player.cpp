@@ -24,7 +24,7 @@ void Player::addCard(const Card &card) {
 
 bool Player::playCard(const Card &card) {
 	if(remove(card)) {
-		cout<<"Player "<<playerNumber_<<" plays"<<card<<"."<<endl;
+		cout<<"Player "<<playerNumber_<<" plays "<<card<<"."<<endl;
 		return true;
 	}
 	else{
@@ -36,7 +36,7 @@ bool Player::playCard(const Card &card) {
 bool Player::discard(const Card &card) {
 	if(remove(card)) {
 		discard_.push_back(card);
-		cout<<"Player "<<playerNumber_<<" discards"<<card<<"."<<endl;
+		cout<<"Player "<<playerNumber_<<" discards "<<card<<"."<<endl;
 		return true;
 	} else {
 		return false;
@@ -58,14 +58,18 @@ void Player::makeMove(vector<Card>& table) {
 
 int Player::getScore() const {
 	int sum = 0;
-	for(int i=0; discard_.size(); i++)
-		sum += ((int)discard_[i].getRank()+1);
+	for(int i=0; i<discard_.size(); i++)
+		sum += discard_[i].getRank()+1;
 	return sum;
 }
-const vector<Card>& Player::getHand() const {
+vector<Card> Player::getHand() const {
 	return hand_;
 }
 
-const vector<Card>& Player::getDiscard() const {
+vector<Card> Player::getDiscard() const {
 	return discard_;
+}
+
+Player::~Player() {
+	delete strategy_;
 }

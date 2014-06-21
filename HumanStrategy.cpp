@@ -26,24 +26,29 @@ void HumanStrategy::executeStrategy(Player& player, vector<Card>& table) {
 	cout<<"Cards on the table:"<<endl;
 	for(unsigned s=0; s<SUIT_COUNT; s++)
 		printCardsOfSuit(table, (Suit)s);
+	cout<<endl;
 
 	//print hand
 	cout<<"Your hand:";
 	const vector<Card>& hand = player.getHand();
 	for(unsigned i=0; i<hand.size(); i++)
 		cout<<" "<<hand[i];
-
+	cout<<endl;
 
 	//print legal plays
 	cout<<"Legal plays:";
 	for(unsigned i=0; i<choices.size(); i++)
 		cout<<" "<<choices[i];
+	cout<<endl;
 
+
+	cout<<">";
 	Command command;
 	while(true) {
 		cin>>command;
 		if(command.type == DECK) {
-			cout<<Deck::getInstance()<<endl;
+			cout<<Deck::getInstance()
+				<<">";
 		} else if(command.type == PLAY && (find(choices.begin(), choices.end(), command.card)!=choices.end())) {
 			if( player.playCard(command.card)) 
 				break;

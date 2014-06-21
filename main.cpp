@@ -1,10 +1,14 @@
-//#include "Game.h"
-#include "Deck.h"
+#include "Game.h"
+
 int main(int argc, char* argv[]) {
-	Deck&  deck = Deck::getInstance();
-	//cout<<deck<<endl;
-	//deck.shufflt();
-	//cout<<deck<<endl;
-	//Game newGame;
-	//newGame.test();
+	
+	//seed given param, default to 0
+	if(2<=argc)
+		srand48(atoi(argv[1]));
+	else
+		srand48(0);
+
+	//create and play new game
+	Game game;
+	game.playGame();
 }

@@ -8,6 +8,7 @@ class Player {
 public:
 	//constructor and strategy setter
 	Player(StraightStrategy*, int);
+	~Player();
 	void setStrategy(StraightStrategy*);
 	void setPlayerNumber(int);
 	//modifiers
@@ -16,8 +17,8 @@ public:
 	bool discard(const Card&); //return false if card is not in hand
 	//accessors
 	int getScore() const;
-	const std::vector<Card>& getHand() const;
-	const std::vector<Card>& getDiscard() const;	
+	std::vector<Card> getHand() const;
+	std::vector<Card> getDiscard() const;	
 	//make a move according to strategy
 	void makeMove(std::vector<Card>&);
 

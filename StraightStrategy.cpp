@@ -6,14 +6,11 @@
 using namespace std;
 
 
-void addIfValid(vector<Card>&, const vector<Card>&, const Card&);
+void addIfAdjacentExist(vector<Card>&, const Card&, const vector<Card>&, const Card&);
 
 vector<Card> StraightStrategy::validStraightPlays(const Player& player, const vector<Card>& table) {
-
 	vector<Card> valid;
 	const vector<Card>& hand = player.getHand();
-
-
 
 	//check 7 of spades, if so, return 7 of spades
 	Card sevenSpade(SPADE, SEVEN);
@@ -23,31 +20,19 @@ vector<Card> StraightStrategy::validStraightPlays(const Player& player, const ve
 
 	} else {
 
-		//check all suit for SEVEN
-		for(int s = CLUB; s<SUIT_COUNT; s++) {
-			Card card((Suit)s, SEVEN);
-			addIfValid(valid,hand,card);
-		}	
-
-		//check all different rank, same suit
-		for(unsigned i=0; i<table.size(); i++) {
-			// get suit rank
-			int suit = table[i].getSuit();
-			int rank = table[i].getRank();
+		for(int i=0; i<hand.size(); i++) {
+			int suit = hand[i].getSuit();
+			int rank = hand[i].getRank();
 			
+			if( rank == SEVEN ) {
+				valid.push_back(hand[i]);
+			} else {
+				if(ACE <= rank-1)
+					addIfAdjacentExist(valid, hand[i], table, Card((Suit)suit, (Rank)(rank-1)));
+				if(rank+1 <= KING)
+					addIfAdjacentExist(valid, hand[i], table, Card((Suit)suit, (Rank)(rank+1)));
 
-			//check one card below with same suit
-			if(ACE <= rank-1) {
-				Card card((Suit)suit, (Rank)(rank-1));
-				addIfValid(valid,hand,card);
 			}
-			//check one card above with same suit
-			if(rank+1 <= KING) {
-				Card card((Suit)suit, (Rank)(rank+1));
-				addIfValid(valid,hand,card);
-			}
-
-
 		}
 	}
 	return valid;
@@ -58,10 +43,10 @@ StraightStrategy::~StraightStrategy() {
 	// just for children to inherit
 }
 
-void addIfValid(vector<Card>& valid, const vector<Card>& hand, const Card& card) {
-	//if it's in your hand
-	if(find(hand.begin(), hand.end(), card) != hand.end()) {
-		//and its not an option you knew about before
+void addIfAdjacentExist(vector<Card>& valid, const Card& card, const vector<Card>& table, const Card& adjacent) {
+	//if adjacent exist
+	if(find(table.begin(), table.end(), adjacent) != table.end()) {
+		//and card is not an option you knew about before
 		if(find(valid.begin(), valid.end(), card) == valid.end()) {
 			//add the option
 			valid.push_back(card);

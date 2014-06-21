@@ -9,6 +9,9 @@
 #include <cassert>
 using namespace std;
 
+
+int getCardValue(const Card&);
+
 Game::Game() 
 	:deck_(Deck::getInstance()) {
 	for(int i=0; i<kNumbeOfPlayers; i++)
@@ -22,7 +25,8 @@ void Game::initGame() {
 	char type;
 
 	for(int i=0; i<kNumbeOfPlayers; i++) {
-		cout<<"Is player "<<i<<" a human(h) or a computer(c)?"<<endl;
+		cout<<"Is player "<<i<<" a human(h) or a computer(c)?"<<endl
+			<<">";
 		cin>>type;		
 
 
@@ -40,6 +44,7 @@ void Game::initGame() {
 		} else {
 			player_[i]->setStrategy(strategy);
 		}
+		player_[i]->setScore(0);
 	}
 }
 
@@ -60,22 +65,18 @@ void Game::initRound() {
 void Game::playGame() {
 	//try catch just for internal flow control, no need to make new exception class
 	try {
-		//while(!gameOver()) {
+		while(!gameOver()) {
 			initRound();
 			playRound();
-		//}
-			for(int p=0; p<kNumbeOfPlayers; p++) {
-				cout<<"Player "<<p+1<<"\'s discards: ";
-				for(int c=0; c<player_[i].getDiscard().size() c++)
-					cout<<c==0?" ":" + "<<
-			}
+			endRound();
+		}
 	} catch (int) {
 	}
 }
 
 bool Game::gameOver() {
 	for(int i=0; i<kNumbeOfPlayers; i++) {
-		if(player_[i]->getScore() >= 80)
+		if(80<=player_[i]->getScore())
 			return true;
 	}
 	return false;
@@ -100,12 +101,32 @@ void Game::playRound() {
 					throw -1;
 				//if rage quit, switch player behavior to computer, and let computer make move
 				} else if(command.type == RAGEQUIT) {
+					cout<<"Player "<<currentPlayer+1<<" ragequits. A computer will now take over."<<endl;
 					StraightStrategy* strategy = new ComputerStrategy;
 					player_[currentPlayer]->setStrategy(strategy);
 					player_[currentPlayer]->makeMove(table); 
 				}
 			}
 		}
+	}
+}
+
+void Game::endRound() {
+	for(int p=0; p<kNumbeOfPlayers; p++) {
+		int roundScore = 0;;
+
+		cout<<"Player "<<p+1<<"\'s discards:";
+		vector<Card> discard = player_[p]->getDiscard();
+		for(unsigned i=0; i<discard.size(); i++) {
+			cout<<" "<<discard[i];
+			roundScore += (discard[i].getRank()+1);
+		}
+		cout<<endl;
+
+		int newScore = player_[p]->getScore() + roundScore;
+		cout<<"Player "<<p+1<<"\'s score: "
+			<<player_[p]->getScore()<<" + "<<roundScore<<" = "<<newScore<<endl;
+		player_[p]->setScore(newScore);
 	}
 }
 

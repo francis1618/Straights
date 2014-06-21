@@ -6,7 +6,7 @@
 using namespace std;
 
 Player::Player(StraightStrategy* strategy, int playerNumber)
-	: strategy_(strategy), playerNumber_(playerNumber) {}
+	: strategy_(strategy), playerNumber_(playerNumber), score_(0) {}
 
 void Player::setStrategy(StraightStrategy* strategy) {
 	if(this->strategy_)
@@ -57,10 +57,11 @@ void Player::makeMove(vector<Card>& table) {
 }
 
 int Player::getScore() const {
-	int sum = 0;
-	for(int i=0; i<discard_.size(); i++)
-		sum += discard_[i].getRank()+1;
-	return sum;
+	return score_;
+}
+
+void Player::setScore(int score) {
+	this->score_ = score;
 }
 vector<Card> Player::getHand() const {
 	return hand_;

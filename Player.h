@@ -16,7 +16,8 @@ public:
 	bool playCard(const Card&);	//return false if card is not in hand
 	bool discard(const Card&); //return false if card is not in hand
 	//accessors
-	int getScore() const;
+	int getScore() const; //get old score
+	void setScore(int); //update score
 	std::vector<Card> getHand() const;
 	std::vector<Card> getDiscard() const;	
 	//make a move according to strategy
@@ -32,6 +33,7 @@ private:
 	std::vector<Card> hand_;
 
 	int playerNumber_;
+	int score_;
 };
 
 

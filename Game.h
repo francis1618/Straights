@@ -18,6 +18,7 @@ public:
 private:
 	void initRound();
 	void playRound();
+	void endRound();
 	bool gameOver();
 	
 private:

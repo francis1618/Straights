@@ -10,17 +10,15 @@ void addIfAdjacentExist(vector<Card>&, const Card&, const vector<Card>&, const C
 
 vector<Card> StraightStrategy::validStraightPlays(const Player& player, const vector<Card>& table) {
 	vector<Card> valid;
-	const vector<Card>& hand = player.getHand();
+	vector<Card> hand = player.getHand();
 
 	//check 7 of spades, if so, return 7 of spades
 	Card sevenSpade(SPADE, SEVEN);
 	if(find(hand.begin(), hand.end(), sevenSpade) != hand.end()) {
-	
 		valid.push_back(sevenSpade);
-
 	} else {
 
-		for(int i=0; i<hand.size(); i++) {
+		for(unsigned i=0; i<hand.size(); i++) {
 			int suit = hand[i].getSuit();
 			int rank = hand[i].getRank();
 			
